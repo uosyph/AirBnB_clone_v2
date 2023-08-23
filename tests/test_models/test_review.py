@@ -16,17 +16,14 @@ class test_review(test_basemodel):
     def test_place_id(self):
         """ """
         new = self.value()
-        new.place_id = "1"
-        self.assertIsInstance(new.place_id, str)
+        self.assertEqual(type(new.place_id), str)
 
     def test_user_id(self):
         """ """
         new = self.value()
-        new.user_id = "id"
-        self.assertIsInstance(new.user_id, str)
+        self.assertEqual(type(new.user_id), str)
 
     def test_text(self):
         """ """
         new = self.value()
-        new.text = "text"
-        self.assertIsInstance(new.text, str)
+        self.assertEqual(type(new.text), str)
