@@ -3,7 +3,7 @@
 import uuid
 import models
 from datetime import datetime
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -36,8 +36,7 @@ class BaseModel:
 
     def __str__(self):
         """Returns a string representation of the instance"""
-        return "[{}] ({}) {}".format(
-            type(self).__name__, self.id, self.__dict__)
+        return f"[{type(self).__name__}] ({self.id}) {self.__dict__}"
 
     def __repr__(self):
         """Returns a string representaion of the instance"""

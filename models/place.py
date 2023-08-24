@@ -2,6 +2,7 @@
 """Place subclass that inherits from BaseModel"""
 from os import getenv
 from sqlalchemy import Column, Table, String, Integer, Float, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
 import models
@@ -34,36 +35,37 @@ class Place(BaseModel, Base):
     amenity_ids = []
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        reviews = relationship("Review", cascade='all, delete, delete-orphan',
+        reviews = relationship("Review",
+                               cascade='all, delete, delete-orphan',
                                backref="place")
-
-        amenities = relationship("Amenity", secondary=place_amenity,
+        amenities = relationship("Amenity",
+                                 secondary=place_amenity,
                                  viewonly=False,
                                  back_populates="place_amenities")
     else:
         @property
         def reviews(self):
-            """Returns a list of reviews id"""
-            var = models.storage.all()
-            lista = []
+            """Getter method for the Review class"""
+            reviews = models.storage.all()
+            reviews_list = []
             result = []
-            for key in var:
+            for key in reviews:
                 review = key.replace('.', ' ')
                 review = shlex.split(review)
                 if (review[0] == 'Review'):
-                    lista.append(var[key])
-            for elem in lista:
-                if (elem.place_id == self.id):
-                    result.append(elem)
-            return (result)
+                    reviews_list.append(reviews[key])
+            for el in reviews_list:
+                if (el.place_id == self.id):
+                    result.append(el)
+            return result
 
         @property
         def amenities(self):
-            """Returns a list of amenity ids"""
+            """Getter method for the Amenity class"""
             return self.amenity_ids
 
         @amenities.setter
         def amenities(self, obj=None):
-            """Appends amenity ids to attribute"""
+            """Setter method for the Amenity class"""
             if type(obj) is Amenity and obj.id not in self.amenity_ids:
                 self.amenity_ids.append(obj.id)
