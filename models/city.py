@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 """City subclass that inherits from BaseModel"""
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
-from models.place import Place
 
 
 class City(BaseModel, Base):

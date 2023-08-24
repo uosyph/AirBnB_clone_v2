@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 """State subclass that inherits from BaseModel"""
 import shlex
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
-from models.city import City
 import models
 
 

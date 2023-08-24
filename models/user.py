@@ -1,11 +1,8 @@
 #!/usr/bin/python3
 """User subclass that inherits from BaseModel"""
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
-from models.place import Place
-from models.review import Review
 
 
 class User(BaseModel, Base):
