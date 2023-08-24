@@ -1,10 +1,10 @@
 <a name="readme-top"></a>
 
-# AirBnB clone - The Console
+# AirBnB clone v2
 
-A command-line interface (CLI) that manages data without a visual interface, similar to a shell. The project uses object-oriented programming, Python data translation, and command interpreted logic to deliver a local database that can be modified by commands. The storage engine used is a JSON file. The project provides a console that is used to manage the models in a common AirBnB application.
+AirBnB clone v2 is an enhanced version of the [original project](https://github.com/yousafesaeed/AirBnB_clone), incorporating additional features and improvements. Just like its predecessor, it utilizes a command-line interface and object-oriented programming to efficiently manage data. However, in this iteration, the storage system has been upgraded to MySQL, providing a more robust and scalable solution for data storage.
 
-The console is implemented using the Python library [Cmd](https://docs.python.org/3/library/cmd.html). The project provides a list of available commands, including create, show, all, update, and destroy, which can be used to manipulate the data in the database.
+Furthermore, the project has been deployed using Fabric, allowing for seamless deployment of the web static. The introduction of a web framework, namely Flask, along with the use of Jinja templating, enables the creation of dynamic web pages, enhancing the overall user experience. With these new features and improvements, the AirBnB clone v2 offers a more comprehensive and user-friendly platform for managing accommodations.
 
 ## Table of Contents
 
@@ -18,7 +18,7 @@ The console is implemented using the Python library [Cmd](https://docs.python.or
     -   [Non-Interactive Mode](#non-interactive-mode)
 -   [Author](#author)
 
-## Requeriments
+## Requirements
 
 You need to have Python installed.
 
@@ -32,6 +32,17 @@ To install Python on Ubuntu:
 
 ```bash
 sudo apt-get install python
+```
+
+You also need to install the following packages:
+
+- mysqlclient
+- sqlalchemy
+
+To install these packages, run the following command:
+
+```sh
+pip install mysqlclient sqlalchemy
 ```
 
 ## Installation
