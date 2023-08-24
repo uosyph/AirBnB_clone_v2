@@ -1,17 +1,16 @@
 #!/usr/bin/python3
-"""Module for State class"""
-
-from sqlalchemy.ext.declarative import declarative_base
-from models.base_model import BaseModel, Base
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, String
-from models.city import City
+"""State subclass that inherits from BaseModel"""
 import shlex
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from models.base_model import BaseModel, Base
+from models.city import City
 import models
 
 
 class State(BaseModel, Base):
-    """Class representing State"""
+    """State class to represents new states"""
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
     cities = relationship(
@@ -19,6 +18,7 @@ class State(BaseModel, Base):
 
     @property
     def cities(self):
+        """Getter method for City class"""
         var = models.storage.all()
         lista = []
         result = []

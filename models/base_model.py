@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-from sqlalchemy.ext.declarative import declarative_base
+"""Base class that defines all common attributes/methods for other classes"""
 import uuid
 import models
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 
 
 Base = declarative_base()
@@ -16,7 +17,7 @@ class BaseModel:
     updated_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
 
     def __init__(self, *args, **kwargs):
-        """Initialization of the class"""
+        """Instatntiates a new model"""
         if kwargs:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
@@ -34,22 +35,22 @@ class BaseModel:
             self.created_at = self.updated_at = datetime.now()
 
     def __str__(self):
-        """Returns a string of class name, id, and dictionary"""
+        """Returns a string representation of the instance"""
         return "[{}] ({}) {}".format(
             type(self).__name__, self.id, self.__dict__)
 
     def __repr__(self):
-        """Returns a string representaion of the class"""
+        """Returns a string representaion of the instance"""
         return self.__str__()
 
     def save(self):
-        """Updates the instance attribute updated_at to current time"""
+        """Updates updated_at with current time when instance is changed"""
         self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
-        """Creates a dictionary of the class and returns it"""
+        """Convert instance into dict format"""
         my_dict = dict(self.__dict__)
         my_dict["__class__"] = str(type(self).__name__)
         my_dict["created_at"] = self.created_at.isoformat()
@@ -59,5 +60,5 @@ class BaseModel:
         return my_dict
 
     def delete(self):
-        """Deletes object from storage"""
+        """Deletes instance from storage"""
         models.storage.delete(self)

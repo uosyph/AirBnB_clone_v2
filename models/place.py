@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-"""Module for Place class"""
-from sqlalchemy.ext.declarative import declarative_base
-from models.base_model import BaseModel, Base
-from sqlalchemy import Column, Table, String, Integer, Float, ForeignKey
-from sqlalchemy.orm import relationship
+"""Place subclass that inherits from BaseModel"""
 from os import getenv
+from sqlalchemy import Column, Table, String, Integer, Float, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from models.base_model import BaseModel, Base
 import models
 
 
@@ -20,7 +20,7 @@ place_amenity = Table("place_amenity", Base.metadata,
 
 
 class Place(BaseModel, Base):
-    """Class for Place"""
+    """Place class to represent new places"""
     __tablename__ = "places"
     city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
     user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
@@ -44,7 +44,7 @@ class Place(BaseModel, Base):
     else:
         @property
         def reviews(self):
-            """ Returns list of reviews.id """
+            """Returns a list of reviews id"""
             var = models.storage.all()
             lista = []
             result = []
@@ -60,11 +60,11 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            """ Returns list of amenity ids """
+            """Returns a list of amenity ids"""
             return self.amenity_ids
 
         @amenities.setter
         def amenities(self, obj=None):
-            """ Appends amenity ids to the attribute """
+            """Appends amenity ids to attribute"""
             if type(obj) is Amenity and obj.id not in self.amenity_ids:
                 self.amenity_ids.append(obj.id)
