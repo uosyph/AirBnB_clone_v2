@@ -6,13 +6,13 @@ from datetime import datetime
 from os import path
 
 env.hosts = ['34.234.201.130', '54.236.51.83']
+env.user = "ubuntu"
 
 
 def do_pack():
     """Generates a .tgz archive from the web_static directory"""
 
     local("mkdir -p versions")
-    now = datetime.today()
     try:
         file_name = f"web_static_{datetime.now().strftime('%Y%m%d%H%M%S')}.tgz"
         local(f"tar -cvzf versions/{file_name} web_static")

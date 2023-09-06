@@ -28,23 +28,21 @@ def do_deploy(archive_path):
     if not path.isfile(archive_path):
         return False
     try:
-        results = []
-        result = put(archive_path, "/tmp")
-        results.append(result.succeeded)
+        put(archive_path, "/tmp/")
 
-        archive = path.archive(archive_path)
-        if archive[-4:] == ".tgz":
-            directory_path = archive[:-4]
+        directory_path = archive_path.split(".")[0]
+        directory_path = directory_path.split("/")[-1]
+        archive_path = archive_path.split("/")[-1]
+
+        sudo(f"mkdir -p /data/web_static/releases/{directory_path}/")
 
         full_path = f"/data/web_static/releases/{directory_path}"
 
-        run(f"mkdir -p {full_path}")
-        run(f"tar -xzf /tmp/{archive} -C {full_path}")
-        run(f"rm /tmp/{archive}")
-        run(f"mv {full_path}/web_static/* {full_path}")
-        run(f"rm -rf {full_path}/web_static")
-        run("rm -rf /data/web_static/current")
-        run(f"ln -s {full_path} /data/web_static/current")
+        sudo(f"tar -xvzf /tmp/{archive_path} -C {full_path}")
+        sudo(f"rm -rf /tmp/{archive_path}")
+        sudo(f"mv -f {full_path}/web_static/* {full_path}")
+        sudo("rm -rf /data/web_static/current")
+        sudo(f"ln -sf {full_path} /data/web_static/current")
 
         return True
     except Exception:
