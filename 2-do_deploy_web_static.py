@@ -6,6 +6,7 @@ from datetime import datetime
 from os import path
 
 env.hosts = ['34.234.201.130', '54.236.51.83']
+env.user = "ubuntu"
 
 
 def do_pack():
@@ -27,21 +28,23 @@ def do_deploy(archive_path):
     if not path.isfile(archive_path):
         return False
     try:
-        put(archive_path, "/tmp/")
+        results = []
+        result = put(archive_path, "/tmp")
+        results.append(result.succeeded)
 
-        directory_path = archive_path.split(".")[0]
-        directory_path = directory_path.split("/")[-1]
-        archive_path = archive_path.split("/")[-1]
-
-        sudo(f"mkdir -p /data/web_static/releases/{directory_path}/")
+        archive = path.archive(archive_path)
+        if archive[-4:] == ".tgz":
+            directory_path = archive[:-4]
 
         full_path = f"/data/web_static/releases/{directory_path}"
 
-        sudo(f"tar -xvzf /tmp/{archive_path} -C {full_path}")
-        sudo(f"rm -rf /tmp/{archive_path}")
-        sudo(f"mv -f {full_path}/web_static/* {full_path}")
-        sudo("rm -rf /data/web_static/current")
-        sudo(f"ln -sf {full_path} /data/web_static/current")
+        run(f"mkdir -p {full_path}")
+        run(f"tar -xzf /tmp/{archive} -C {full_path}")
+        run(f"rm /tmp/{archive}")
+        run(f"mv {full_path}/web_static/* {full_path}")
+        run(f"rm -rf {full_path}/web_static")
+        run("rm -rf /data/web_static/current")
+        run(f"ln -s {full_path} /data/web_static/current")
 
         return True
     except Exception:
