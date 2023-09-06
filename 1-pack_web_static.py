@@ -10,8 +10,9 @@ def do_pack():
 
     local("mkdir -p versions")
     try:
-        file_name = f"web_static_{datetime.now().strftime('%Y%m%d%H%M%S')}.tgz"
-        local(f"tar -cvzf versions/{file_name} web_static")
+        time = datetime.now().strftime('%Y%m%d%H%M%S')
+        file_name = "web_static_{}.tgz".format(time)
+        local("tar -cvzf versions/{} web_static".format(file_name))
         return file_name
     except Exception:
         return

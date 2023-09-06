@@ -14,8 +14,9 @@ def do_pack():
 
     local("mkdir -p versions")
     try:
-        file_name = f"web_static_{datetime.now().strftime('%Y%m%d%H%M%S')}.tgz"
-        local(f"tar -cvzf versions/{file_name} web_static")
+        time = datetime.now().strftime('%Y%m%d%H%M%S')
+        file_name = "web_static_{}.tgz".format(time)
+        local("tar -cvzf versions/{} web_static".format(file_name))
         return file_name
     except Exception:
         return
@@ -33,15 +34,15 @@ def do_deploy(archive_path):
         directory_path = directory_path.split("/")[-1]
         archive_path = archive_path.split("/")[-1]
 
-        sudo(f"mkdir -p /data/web_static/releases/{directory_path}/")
+        sudo("mkdir -p /data/web_static/releases/{}/".format(directory_path))
 
-        full_path = f"/data/web_static/releases/{directory_path}"
+        full_path = "/data/web_static/releases/{}".format(directory_path)
 
-        sudo(f"tar -xvzf /tmp/{archive_path} -C {full_path}")
-        sudo(f"rm -rf /tmp/{archive_path}")
-        sudo(f"mv -f {full_path}/web_static/* {full_path}")
+        sudo("tar -xvzf /tmp/{} -C {}".format(archive_path, full_path))
+        sudo("rm -rf /tmp/{}".format(archive_path))
+        sudo("mv -f {}/web_static/* {}".format(full_path, full_path))
         sudo("rm -rf /data/web_static/current")
-        sudo(f"ln -sf {full_path} /data/web_static/current")
+        sudo("ln -sf {} /data/web_static/current".format(full_path))
 
         return True
     except Exception:
@@ -53,4 +54,4 @@ def deploy():
 
     if not do_pack():
         return False
-    return do_deploy(f"versions/{do_pack()}")
+    return do_deploy("versions/{}".format(do_pack()))
