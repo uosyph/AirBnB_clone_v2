@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Automating archiveing and distributes the archive to the web servers"""
 
-from fabric.api import local, run, env, put, sudo
+from fabric.api import local, run, env, put
 from datetime import datetime
 from os import path
 
@@ -25,24 +25,27 @@ def do_pack():
 def do_deploy(archive_path):
     """Distributes the .tgz archive to the web servers"""
 
-    if not path.isfile(archive_path):
+    if not path.exists(archive_path):
         return False
+
     try:
+        archived_file = archive_path[9:]
+        newest_version = "/data/web_static/releases/{}".format(
+            archived_file[:-4])
+        archived_file = "/tmp/{}".format(archived_file)
+
         put(archive_path, "/tmp/")
+        run("sudo mkdir -p {}".format(newest_version))
+        run("sudo tar -xzf {} -C {}/".format(archived_file,
+                                             newest_version))
+        run("sudo rm {}".format(archived_file))
+        run("sudo mv {}/web_static/* {}".format(newest_version,
+                                                newest_version))
+        run("sudo rm -rf {}/web_static".format(newest_version))
+        run("sudo rm -rf /data/web_static/current")
+        run("sudo ln -s {} /data/web_static/current".format(newest_version))
 
-        directory_path = archive_path.split(".")[0]
-        directory_path = directory_path.split("/")[-1]
-        archive_path = archive_path.split("/")[-1]
-
-        sudo("mkdir -p /data/web_static/releases/{}/".format(directory_path))
-
-        full_path = "/data/web_static/releases/{}".format(directory_path)
-
-        sudo("tar -xvzf /tmp/{} -C {}".format(archive_path, full_path))
-        sudo("rm -rf /tmp/{}".format(archive_path))
-        sudo("mv -f {}/web_static/* {}".format(full_path, full_path))
-        sudo("rm -rf /data/web_static/current")
-        sudo("ln -sf {} /data/web_static/current".format(full_path))
+        print("New version deployed!")
 
         return True
     except Exception:
