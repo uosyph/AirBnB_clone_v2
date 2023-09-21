@@ -9,50 +9,53 @@ app.url_map.strict_slashes = False
 
 @app.route("/")
 def index():
-    """Route index"""
+    """/: display 'Hello HBNB!'"""
     return "Hello HBNB!"
 
 
 @app.route("/hbnb")
 def hbnb():
-    """Route index"""
+    """/hbnb: display “HBNB”"""
     return "HBNB"
 
 
 @app.route("/c/<string:text>")
 def ctext(text):
-    """Route index"""
+    """/c/<text>: display 'C ' followed by the value of the text variable
+    (replaceing '_' with a space)"""
     text = text.replace("_", " ")
-    return "C {}".format(text)
+    return f"C {text}"
 
 
 @app.route("/python/", defaults={"text": "is cool"})
 @app.route("/python/<string:text>")
 def pythontext(text="is cool"):
-    """Route index"""
+    """/python/<text>: display “Python ”, followed by the value of
+    the text variable (replaceing '_' with a space)
+    Default value: “is cool”"""
     text = text.replace("_", " ")
-    return "Python {}".format(text)
+    return f"Python {text}"
 
 
 @app.route("/number/<int:num>")
 def number(num):
-    """Route index"""
-    return "{} is a number".format(num)
+    """/number/<n>: display a number only if n is an integer"""
+    return f"{num} is a number"
 
 
 @app.route("/number_template/<int:num>")
 def number_template(num):
-    """Route index"""
+    """/number_template/<n>: display a HTML page only if n is an integer"""
     return render_template("5-number.html", value=num)
 
 
 @app.route("/number_odd_or_even/<int:num>")
 def odd_or_even(num):
-    """Route index"""
+    """/number_odd_or_even/<n>: display a HTML page only if n is an integer"""
     if num & 1:
-        data = "{} is odd".format(num)
+        data = f"{num} is odd"
     else:
-        data = "{} is even".format(num)
+        data = f"{num} is even"
     return render_template("6-number_odd_or_even.html", value=data)
 
 

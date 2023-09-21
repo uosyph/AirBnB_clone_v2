@@ -9,35 +9,38 @@ app.url_map.strict_slashes = False
 
 @app.route("/")
 def index():
-    """Route index"""
+    """/: display 'Hello HBNB!'"""
     return "Hello HBNB!"
 
 
 @app.route("/hbnb")
 def hbnb():
-    """Route index"""
+    """/hbnb: display “HBNB”"""
     return "HBNB"
 
 
 @app.route("/c/<string:text>")
 def ctext(text):
-    """Route index"""
+    """/c/<text>: display 'C ' followed by the value of the text variable
+    (replaceing '_' with a space)"""
     text = text.replace("_", " ")
-    return "C {}".format(text)
+    return f"C {text}"
 
 
 @app.route("/python/", defaults={"text": "is cool"})
 @app.route("/python/<string:text>")
 def pythontext(text="is cool"):
-    """Route index"""
+    """/python/<text>: display “Python ”, followed by the value of
+    the text variable (replaceing '_' with a space)
+    Default value: “is cool”"""
     text = text.replace("_", " ")
-    return "Python {}".format(text)
+    return f"Python {text}"
 
 
 @app.route("/number/<int:num>")
 def number(num):
-    """Route index"""
-    return "{} is a number".format(num)
+    """/number/<n>: display a number only if n is an integer"""
+    return f"{num} is a number"
 
 
 if __name__ == "__main__":

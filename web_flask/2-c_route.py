@@ -9,21 +9,22 @@ app.url_map.strict_slashes = False
 
 @app.route("/")
 def index():
-    """Route index"""
+    """/: display 'Hello HBNB!'"""
     return "Hello HBNB!"
 
 
 @app.route("/hbnb")
 def hbnb():
-    """Route index"""
+    """/hbnb: display “HBNB”"""
     return "HBNB"
 
 
 @app.route("/c/<string:text>")
 def ctext(text):
-    """Route index"""
+    """/c/<text>: display 'C ' followed by the value of the text variable
+    (replaceing '_' with a space)"""
     text = text.replace("_", " ")
-    return "C {}".format(text)
+    return f"C {text}"
 
 
 if __name__ == "__main__":
