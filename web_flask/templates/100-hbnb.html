@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="../static/styles/3-footer.css">
 	<link rel="stylesheet" type="text/css" href="../static/styles/4-common.css">
 	<link rel="stylesheet" type="text/css" href="../static/styles/6-filters.css">
+	<link rel="stylesheet" type="text/css" href="../static/styles/8-places.css">
 </head>
 <body>
 	<header></header>
@@ -25,7 +26,7 @@
 					</ul></li>
 					{% endfor %}
 				</ul>
-			</div>
+				</div>
 			<div class="amenities">
 				<h3>Amenities</h3>
 				<h4>&nbsp;</h4>
@@ -36,6 +37,22 @@
 				</ul>
 			</div>
 			<button>Search</button>
+		</section>
+		<section class="places">
+			<h1>Places</h1>
+			{% for place in places|sort(attribute='name')  %}
+			<article>
+				<h2>{{ place.name }}</h2>
+				<div class ="price_by_night">${{ place.price_by_night }}</div>
+				<div class ="information">
+					<div class ="max_guest">{{ place.max_guest }} Guests</div>
+					<div class ="number_rooms">{{ place.number_rooms }} Bedroom</div>
+					<div class ="number_bathrooms">{{ place.number_bathrooms }} Bathroom</div>
+				</div>
+				<div class ="user"><b>Owner:</b> {{ users[place.user_id].first_name }} {{ users[place.user_id].last_name}}</div>
+				<div class ="description">{{ place.description | safe }}</div>
+			</article>
+			{% endfor %}
 		</section>
 	</div>
 	<footer>Holberton School</footer>
