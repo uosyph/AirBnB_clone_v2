@@ -6,9 +6,10 @@ from models import storage
 from models.state import State
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 
-@app.route("/cities_by_states", strict_slashes=False)
+@app.route("/cities_by_states")
 def cities_by_states_list():
     """/states: display a HTML page: (inside the tag BODY)
     /states/<id>: display a HTML page: (inside the tag BODY)"""
@@ -16,7 +17,7 @@ def cities_by_states_list():
 
 
 @app.teardown_appcontext
-def use_teardown(exception):
+def teardown(exception):
     """Remove the current SQLAlchemy Session"""
     storage.close()
 
