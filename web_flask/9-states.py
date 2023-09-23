@@ -87,10 +87,10 @@ def states_id(id):
     """/states: display a HTML page: (inside the tag BODY)"""
     in_list = 0
     states = storage.all(State).values()
-    for data in states:
+    for state in states:
         in_list = 1
-        if id == data.id:
-            return render_template("9-states.html", states=data)
+        if id == state.id:
+            return render_template("9-states.html", states=state)
     if id is not None and in_list == 1:
         return render_template("9-states.html", states=None)
     return render_template("9-states.html", states=states)
