@@ -2,7 +2,7 @@
 
 # AirBnB clone v2
 
-AirBnB clone v2 is an enhanced version of the [original project](https://github.com/yousafesaeed/AirBnB_clone), incorporating additional features and improvements. Just like its predecessor, it utilizes a command-line interface and object-oriented programming to efficiently manage data. However, in this iteration, the storage system has been upgraded to MySQL, providing a more robust and scalable solution for data storage.
+AirBnB clone v2 is an enhanced version of the [original project](https://github.com/uosyph/AirBnB_clone), incorporating additional features and improvements. Just like its predecessor, it utilizes a command-line interface and object-oriented programming to efficiently manage data. However, in this iteration, the storage system has been upgraded to MySQL, providing a more robust and scalable solution for data storage.
 
 Furthermore, the project has been deployed using Fabric, allowing for seamless deployment of the web static. The introduction of a web framework, namely Flask, along with the use of Jinja templating, enables the creation of dynamic web pages, enhancing the overall user experience. With these new features and improvements, the AirBnB clone v2 offers a more comprehensive and user-friendly platform for managing accommodations.
 
@@ -52,7 +52,7 @@ Start using the console
 Clone the repository:
 
 ```bash
-git clone https://github.com/yousafesaeed/AirBnB_clone_v2
+git clone https://github.com/uosyph/AirBnB_clone_v2
 ```
 
 Move in to the directory:
@@ -187,6 +187,6 @@ AirBnB_clone$
 
 ## Author
 
-[Yousef Saeed](https://github.com/yousafesaeed)
+[Yousef Saeed](https://github.com/uosyph)
 
 <p align="right"><a href="#readme-top">Back to Top</a></p>
